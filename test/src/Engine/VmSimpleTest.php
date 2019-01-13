@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 
 
 /**
- *
+ * TODO: Add more tests
  *
  *
  */
@@ -73,43 +73,5 @@ final class VmSimpleTest extends TestCase
         $engine->template($script);
     }
 
-    /**
-     *
-     */
-    public function testQuick()
-    {
-        $script = $this->library->script("each-1");
-        $template = $this->engine->template($script);
-
-        echo "\n";
-        $template->write([
-            'user' => 'Jane Doe',
-            'now' => time(),
-            'success' => false,
-            'users' => [
-                ['name' => 'Kevin Smith'],
-                ['name' => 'Joss Wheadon']
-            ],
-            'items' => [
-                'red', 'green', 'blue'
-            ]
-        ]);
-        $this->assertTrue(true);
-    }
-
-    /**
-     *
-     */
-    public function testNested()
-    {
-        $script = $this->library->script("helper-3");
-        $template = $this->engine->template($script);
-
-        echo "\n";
-        $template->write([
-            'now' => time()
-        ]);
-        $this->assertTrue(true);
-    }
     
 }

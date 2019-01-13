@@ -77,7 +77,7 @@ final class VmFixturesTest extends TestCase
     public function fixtures(): Iterator
     {
         $flags = FilesystemIterator::SKIP_DOTS;
-        $directory = new FilesystemIterator(TEST_PATH . '/fixtures', $flags);
+        $directory = new FilesystemIterator(TEST_PATH . '/fixtures/engine', $flags);
         foreach ($directory as $info) {
             if (!$info->isDir()) {
                 continue;

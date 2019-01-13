@@ -1,0 +1,29 @@
+{
+    "type": "handlebars",
+    "version": "1",
+    "offset": 0,
+    "length": 16,
+    "elements": [
+        {
+            "type": "text",
+            "offset": 0,
+            "length": 3
+        },
+        {
+            "type": "stmt",
+            "offset": 3,
+            "length": 13,
+            "escape": true,
+            "stmt": {
+                "type": "path",
+                "name": "user.name",
+                "path": ["user", "name"]
+            }
+        },
+        {
+            "type": "text",
+            "offset": 16,
+            "length": 5
+        }
+    ]
+}

@@ -1,0 +1,66 @@
+{
+    "type": "handlebars",
+    "version": "1",
+    "offset": 0,
+    "length": 80,
+    "elements": [
+        {
+            "type": "text",
+            "offset": 0,
+            "length": 5
+        },
+        {
+            "type": "block",
+            "method": "helper",
+            "offset": 8,
+            "length": 72,
+            "stmt": {
+                "type": "path",
+                "name": "each",
+                "path": ["each"]
+            },
+            "arguments": [
+                {
+                    "type": "path",
+                    "name": "items",
+                    "path": ["items"]
+                }
+            ],
+            "elements": [
+                {
+                    "type": "text",
+                    "offset": 20,
+                    "length": 9
+                },
+                {
+                    "type": "stmt",
+                    "offset": 29,
+                    "length": 8,
+                    "escape": true,
+                    "stmt": {
+                        "type": "path",
+                        "name": "this",
+                        "path": ["this"]
+                    }
+                },
+                {
+                    "type": "text",
+                    "offset": 37,
+                    "length": 6
+                }
+            ],
+            "alternatives": [
+                {
+                    "type": "text",
+                    "offset": 51,
+                    "length": 20
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "offset": 80,
+            "length": 7
+        }
+    ]
+}
