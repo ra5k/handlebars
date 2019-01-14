@@ -18,7 +18,19 @@ namespace Ra5k\Handlebars\Parser\Csr;
  */
 final class TkEnd implements Token
 {
-
+    /**
+     * @var int
+     */
+    private $offset;
+    
+    /**
+     * @param int $offset
+     */
+    public function __construct(int $offset)
+    {
+        $this->offset = $offset;
+    }
+    
     public function isValid(): bool
     {
         return false;
@@ -26,9 +38,14 @@ final class TkEnd implements Token
 
     public function offset(): int
     {
-        return -1;
+        return $this->offset;
     }
     
+    public function length(): int
+    {
+        return 0;
+    }
+
     public function type(): int
     {
         return self::T_END;

@@ -49,7 +49,7 @@ final class CsHandlebars
             'type' => 'handlebars',
             'version' => '1',
             'offset' => $offset,
-            'length' => $position - $offset,
+            'length' => $token->offset() - $offset,
             'elements' => $children,
         ], $token);
     }

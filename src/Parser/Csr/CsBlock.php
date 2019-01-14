@@ -49,6 +49,7 @@ final class CsBlock
         $name = $this->pathName($path->model());        
         $elements = $this->parseElements($args->next(), $name);
         $after = $elements->next();
+        //
         $node = $this->normalizeTag([
             'type' => 'block',
             'method' => $this->method,

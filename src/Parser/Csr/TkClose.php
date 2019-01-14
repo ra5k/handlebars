@@ -68,7 +68,7 @@ final class TkClose extends TkBase
                 $token = new TkText($this->source, $offset);
             }
         } else {
-            $token = new TkEnd();
+            $token = new TkEnd($offset);
         }
         return $token;
     }

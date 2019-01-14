@@ -136,7 +136,7 @@ final class TkExpr extends TkBase
     public function next(): Token
     {
         if ($this->type == self::T_END) {
-            $token = new TkEnd();
+            $token = new TkEnd($this->offset());
         } else if ($this->type == self::T_CLOSE) {
             $close = new TkClose($this->source, $this->offset, $this->content);
             $token = $close->next();

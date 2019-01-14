@@ -63,6 +63,14 @@ abstract class TkBase implements Token
     }
 
     /**
+     * @return int
+     */
+    public function length(): int
+    {
+        return strlen($this->content());
+    }
+    
+    /**
      * @return array
      */
     public function dump(): array

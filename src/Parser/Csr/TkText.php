@@ -38,6 +38,7 @@ final class TkText extends TkBase
         parent::__construct($source, $offset);
         $capture = PREG_OFFSET_CAPTURE;
         $matches = null;
+        //
         if (preg_match('/(?<!\\\\)\{\{[\{&!]?/', $source, $matches, $capture, $offset)) {
             $match = $matches[0][0];
             $position = $matches[0][1];
@@ -47,13 +48,14 @@ final class TkText extends TkBase
             } else {
                 $this->next = new TkOpen($this->source, $position, $match);
             }            
-        } else {            
-            if ($offset < strlen($source)) {
+        } else {
+            $length = strlen($source);
+            if ($offset < $length) {
                 $this->content = substr($source, $offset);
-                $this->next = new TkEnd();
+                $this->next = new TkEnd($length);
             } else {
                 $this->content = '';
-                $this->next = new TkEnd();
+                $this->next = new TkEnd($length);
             }
         }        
     }

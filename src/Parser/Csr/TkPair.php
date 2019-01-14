@@ -62,6 +62,11 @@ final class TkPair implements Token
         return $this->origin->offset();
     }
 
+    public function length(): int
+    {
+        return $this->origin->length();
+    }
+    
     public function source(): string
     {
         return $this->origin->source();

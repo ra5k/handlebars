@@ -51,6 +51,11 @@ interface Token
     public function offset(): int;
     
     /**
+     * @return int
+     */
+    public function length(): int;
+    
+    /**
      * @return Token
      */
     public function next(): self;
