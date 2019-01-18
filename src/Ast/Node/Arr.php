@@ -87,7 +87,7 @@ final class Arr implements Node
      *
      * @return array
      */
-    public function dump(): array
+    public function export(): array
     {
         return $this->data;
     }

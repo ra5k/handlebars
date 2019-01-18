@@ -14,11 +14,13 @@ use Ra5k\Handlebars\{Parser, Script};
 
 // --------------------------------------------------------------------
 $hbs = <<<'EOF'
-   {{#if AA}}
-       <p>{{.}}</p>
-   {{else if BB}}
-       <p>DEFAULT</p>
-   {{/if}}
+{{#if AA}}
+    aa
+{{else if BB}}
+    bb
+{{else}}
+    cc
+{{/if}}
 EOF;
 
 // --------------------------------------------------------------------
@@ -33,6 +35,6 @@ $model = $parser->model($script);
 printf("Length: %d\n", strlen($hbs));
 var_dump($hbs);
 $flags = JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT;
-echo json_encode($model->root()->dump(), $flags), PHP_EOL;
+echo json_encode($model->root()->export(), $flags), PHP_EOL;
 
 

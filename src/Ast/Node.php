@@ -46,6 +46,6 @@ interface Node
      *
      * @return array
      */
-    public function dump(): array;
+    public function export(): array;
 
 }

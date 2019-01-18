@@ -30,7 +30,7 @@ final class CsrFixturesTest extends BaseTestCase
         $script = new Script\Memory($source);
         $parser = new Parser\Csr();        
         $model = $parser->model($script);
-        $actual = $model->root()->dump();
+        $actual = $model->root()->export();
         //
         if ($expected === null) {
             $this->dump("$name: ", $actual);

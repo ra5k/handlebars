@@ -28,7 +28,7 @@ $engine = new Engine\Vm();
 
 
 $flags = JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT;
-echo json_encode($model->root()->dump(), $flags), PHP_EOL;
+echo json_encode($model->root()->export(), $flags), PHP_EOL;
 
 $temp = $engine->template($script);
 $temp->write([

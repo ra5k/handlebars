@@ -143,14 +143,18 @@ final class CsBlock
     {
         $record = [];
         $key = 'elements';
+        //
         foreach ($elements as $e) {
             $stmt = $e['stmt'] ?? null;
             $type = $stmt['type'] ?? '';
             $name = $stmt['name'] ?? '';
+            $args = $stmt['arguments'] ?? [];
+            
             if ($type == 'path' && $name == 'else') {
                 $key = 'alternatives';
                 continue;
             }
+            
             $record[$key][] = $e;            
         }
         return $record;
