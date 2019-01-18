@@ -63,4 +63,9 @@ final class Unshifted implements Arguments
         return $this->orig->hash();
     }
 
+    public function isEmpty(): bool
+    {
+        return false;
+    }
+
 }

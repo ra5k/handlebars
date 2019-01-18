@@ -94,7 +94,7 @@ final class Core implements Template
                 $this->include($cursor, $context);
                 break;
             case 'handlebars':
-                $this->program($cursor, $context);
+                $this->each($cursor, $context);
                 break;
             case 'comment':
                 // ignore;
@@ -138,10 +138,12 @@ final class Core implements Template
     }
 
     /**
+     * Execute all (child) elements
+     * 
      * @param Cursor $cursor
      * @param Context $context
      */
-    private function program(Cursor $cursor, Context $context)
+    private function each(Cursor $cursor, Context $context)
     {
         foreach ($cursor->node()->elements() as $node) {
             $child = new Cursor($this, $node, $cursor->params());
@@ -248,22 +250,30 @@ final class Core implements Template
     private function block(Cursor $cursor, Context $context)
     {
         $node = $cursor->node();
-        $path = $node->prop('stmt');
-        $name = (string) $path['name'] ?? '';
-        $helper = $this->engine->helpers()->get($name);
-        $args = $this->arguments($cursor, $context, 'stmt');
+        $stmt = $node->prop('stmt');
         //
-        if ($helper->exists()) {
-            $result = $this->delegate($helper, $args, $context, $cursor);
-            $this->print($result, $cursor);
+        if ($stmt === null) {
+            $this->each($cursor, $context);
         } else {
-            if (empty($args->vector()) && empty($args->hash())) {
-                $args = new Arguments\Unshifted('each', $args);
-                $this->section($args, $cursor, $context);
+            $name = (string) $stmt['name'] ?? '';
+            $args = $this->arguments($cursor, $context, 'stmt');
+            $helper = $this->engine->helpers()->get($name);
+            //
+            if ($helper->exists()) {
+                $result = $this->delegate($helper, $args, $context, $cursor);
+                $this->print($result, $cursor);
             } else {
-                throw new ExecError($node, $this->script->content(), "Helper '$name' not found", 1);
+                if ($args->isEmpty()) {
+                    $path = (array) $stmt['path'] ?? [];
+                    $section = new Helper\Section();
+                    $args = new Arguments\Arr(['section', $context->node($path)->data() ]);
+                    $section->exec($args, $context, $cursor);
+                } else {
+                    throw new ExecError($node, $this->script->content(), "Helper '$name' not found", 1);
+                }
             }
         }
+        
     }
 
     /**
@@ -330,22 +340,6 @@ final class Core implements Template
         }
         //
         return new Arguments\Arr($arguments, $options);
-    }
-
-    /**
-     * @param Arguments $arguments
-     * @param Cursor $cursor
-     * @param Context $context
-     * @return void
-     */
-    private function section(Arguments $arguments, Cursor $cursor, Context $context)
-    {
-        $sequence = new Sequence($arguments->at(1));
-        foreach ($sequence as $key => $value) {
-            $sub = $context->child($value);
-            $tmp = new Context\Simple(['this' => $value, '@key' => $key]);
-            $this->exec($cursor, new Context\Overlay($sub, $tmp));
-        }
     }
 
     /**

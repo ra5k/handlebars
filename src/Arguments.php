@@ -42,4 +42,9 @@ interface Arguments
      */
     public function hash(): array;
 
+    /**
+     * @return bool
+     */
+    public function isEmpty(): bool;
+    
 }

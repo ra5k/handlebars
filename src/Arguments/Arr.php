@@ -34,7 +34,7 @@ final class Arr implements Arguments
      * @param array $arguments
      * @param array $options
      */
-    public function __construct(array $arguments, array $options)
+    public function __construct(array $arguments = [], array $options = [])
     {
         $this->arguments = $arguments;
         $this->options = $options;
@@ -60,4 +60,9 @@ final class Arr implements Arguments
         return $this->options;
     }
 
+    public function isEmpty(): bool
+    {
+        return (count($this->arguments) <= 1) && empty($this->options);
+    }
+    
 }

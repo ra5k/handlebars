@@ -19,7 +19,7 @@ use Traversable, Iterator, IteratorAggregate, ArrayIterator, EmptyIterator, Coun
  *
  *
  */
-final class Each extends Standard
+final class Section extends Standard
 {
 
     /**
@@ -79,8 +79,10 @@ final class Each extends Standard
             $items = $data;
         } else if ($data instanceof IteratorAggregate) {
             $items = $data->getIterator();
-        } else {
+        } else if (empty($data)) {
             $items = new EmptyIterator();
+        } else {
+            $items = new ArrayIterator([$data]);
         }
         return $items;        
     }

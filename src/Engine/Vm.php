@@ -60,6 +60,7 @@ final class Vm implements Engine
             'extends' => new Helper\Derived,
             'block' => new Helper\Block,
             'parent' => new Helper\Super,
+            'section' => new Helper\Section,
         ]);
     }
 

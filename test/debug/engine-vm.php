@@ -10,17 +10,12 @@
 
 require __DIR__ . '/../bootstrap.php';
 
-use Ra5k\Handlebars\{Parser, Script};
+use Ra5k\Handlebars\{Parser, Script, Engine};
 
-// --------------------------------------------------------------------
+// Sections
 $hbs = <<<'EOF'
-   {{#if AA}}
-       <p>{{.}}</p>
-   {{else if BB}}
-       <p>DEFAULT</p>
-   {{/if}}
+AA{{#user}}.{{/user}}ZZ
 EOF;
-
 // --------------------------------------------------------------------
 
 //   {{else if BB}}
@@ -29,10 +24,14 @@ EOF;
 $script = new Script\Memory($hbs);
 $parser = new Parser\Csr();        
 $model = $parser->model($script);
+$engine = new Engine\Vm();
 
-printf("Length: %d\n", strlen($hbs));
-var_dump($hbs);
+
 $flags = JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT;
 echo json_encode($model->root()->dump(), $flags), PHP_EOL;
 
-
+$temp = $engine->template($script);
+$temp->write([
+    'user' => 'x'
+]);
+echo PHP_EOL;
