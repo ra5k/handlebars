@@ -73,28 +73,29 @@ final class Core implements Template
      *
      * @param Cursor $cursor
      * @param Context $context
-     * @return void
+     * @return mixed
      * 
      * @internal
      */
     public function exec(Cursor $cursor, Context $context)
     {
+        $result = null;
         $node = $cursor->node();
         switch ($node->type()) {
             case 'text':
-                $this->text($cursor);
+                $result = $this->text($cursor);
                 break;
             case 'stmt':
-                $this->stmt($cursor, $context);
+                $result = $this->stmt($cursor, $context);
                 break;
             case 'block':
-                $this->block($cursor, $context);
+                $result = $this->block($cursor, $context);
                 break;
             case 'include':
                 $this->include($cursor, $context);
                 break;
             case 'handlebars':
-                $this->each($cursor, $context);
+                $result = $this->each($cursor, $context);
                 break;
             case 'comment':
                 // ignore;
@@ -103,6 +104,7 @@ final class Core implements Template
                 $msg = sprintf("Node type (%s) not supported", $node->type());
                 throw new ExecError($node, $this->script->content(), $msg, 4);
         }
+        return $result;
     }
 
     /**
@@ -183,6 +185,7 @@ final class Core implements Template
     {
         $result = $this->eval($cursor, $context);
         $this->print($result, $cursor);
+        return $result;
     }
 
     /**
@@ -245,15 +248,17 @@ final class Core implements Template
      * Handles a block node
      * @param Cursor $cursor
      * @param Context $context
-     * @return void
+     * @return mixed
      */
     private function block(Cursor $cursor, Context $context)
     {
+        $result = null;
         $node = $cursor->node();
         $stmt = $node->prop('stmt');
         //
         if ($stmt === null) {
             $this->each($cursor, $context);
+            $result = true;
         } else {
             $name = (string) $stmt['name'] ?? '';
             $args = $this->arguments($cursor, $context, 'stmt');
@@ -261,19 +266,18 @@ final class Core implements Template
             //
             if ($helper->exists()) {
                 $result = $this->delegate($helper, $args, $context, $cursor);
-                $this->print($result, $cursor);
             } else {
                 if ($args->isEmpty()) {
                     $path = (array) $stmt['path'] ?? [];
                     $section = new Helper\Section();
                     $args = new Arguments\Arr(['section', $context->node($path)->data() ]);
-                    $section->exec($args, $context, $cursor);
+                    $result = $section->exec($args, $context, $cursor);
                 } else {
                     throw new ExecError($node, $this->script->content(), "Helper '$name' not found", 1);
                 }
             }
         }
-        
+        return $result;
     }
 
     /**

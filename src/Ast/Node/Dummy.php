@@ -11,7 +11,7 @@
 namespace Ra5k\Handlebars\Ast\Node;
 
 // [imports]
-use Ra5k\Handlebars\Node;
+use Ra5k\Handlebars\Ast\Node;
 use Iterator, EmptyIterator;
 
 /**
@@ -42,7 +42,7 @@ final class Dummy implements Node
         return new EmptyIterator();
     }
 
-    public function dump(): array
+    public function export(): array
     {
         return [];
     }

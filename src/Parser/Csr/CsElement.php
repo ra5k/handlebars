@@ -52,7 +52,7 @@ trait CsElement
             'type' => 'text',
             'offset' => $token->offset(),
             'length' => strlen($token->content()),
-            // 'content' => $token->content()
+            'content' => $token->content()
         ], $token->next());
     }
 

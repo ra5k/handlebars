@@ -22,6 +22,13 @@ use Ra5k\Handlebars\{Arguments, Context, Flow};
 final class With extends Standard
 {
 
+    /**
+     * 
+     * @param Arguments $args
+     * @param Context $context
+     * @param Flow $flow
+     * @return mixed
+     */
     public function exec(Arguments $args, Context $context, Flow $flow)
     {
         if ($args->at(1)) {

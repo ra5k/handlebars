@@ -91,5 +91,5 @@ final class Arr implements Node
     {
         return $this->data;
     }
-
+    
 }

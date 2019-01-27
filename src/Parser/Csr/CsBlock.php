@@ -142,22 +142,53 @@ final class CsBlock
     private function placeElements(array $elements)
     {
         $record = [];
-        $key = 'elements';
+        $last = [];
+        $target =& $record;
         //
-        foreach ($elements as $e) {
-            $stmt = $e['stmt'] ?? null;
+        foreach ($elements as $node) {
+            $stmt = $node['stmt'] ?? null;
             $type = $stmt['type'] ?? '';
             $name = $stmt['name'] ?? '';
-            $args = $stmt['arguments'] ?? [];
-            
+            //
             if ($type == 'path' && $name == 'else') {
-                $key = 'alternatives';
+                $args = $node['arguments'] ?? null;
+                if ($args) {
+                    $path = array_shift($args);
+                    $block = $this->createBlock('helper', $path, $args);
+                    $record['alternatives'][] =& $block;
+                    $target =& $block;
+                } else {
+                    $target =& $last;                    
+                }
                 continue;
             }
-            
-            $record[$key][] = $e;            
+            $target['elements'][] = $node;
+        }
+        //
+        if ($last) {
+            $record['alternatives'][] = $this->createBlock('else') + $last;
         }
         return $record;
+    }
+    
+    /**
+     * 
+     * @param string $type
+     * @param string $method
+     * @param array $stmt
+     * @param array $args
+     * @return array
+     */
+    private function createBlock($method, $stmt = null, $args = null)
+    {
+        $block = ['type' => 'block', 'method' => $method];
+        if ($stmt) {
+            $block['stmt'] = $stmt;
+        }
+        if ($args) {
+            $block['arguments'] = $args;
+        }
+        return $block;
     }
     
 }

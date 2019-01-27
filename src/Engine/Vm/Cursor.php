@@ -73,6 +73,9 @@ final class Cursor implements Flow
         foreach ($this->node->alternatives() as $child) {
             $cursor = new self($this->core, $child, $this->params);
             $result = $this->core->exec($cursor, $context);
+            if ($result) {
+                break;
+            }
         }
         return $result;
     }

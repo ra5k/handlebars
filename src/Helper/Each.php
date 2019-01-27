@@ -30,25 +30,23 @@ final class Each extends Standard
      */
     public function exec(Arguments $args, Context $context, Flow $flow)
     {
-        $empty = true;
         $result = null;
         $offset = 0;
         $items = $args->at(1);
         $count = $this->count($items);
         //
         foreach ($this->traversable($items) as $key => $value) {
-            $empty = false;
             $first = ($offset === 0);
             $last  = ($count === null) ? null : ($offset == $count - 1);
             $sub = $context->child($value);
             $tmp = ['this' => $value, '@key' => $key, '@first' => $first, '@last' => $last] + $args->hash();
-            $result = $flow->exec(new Context\Overlay($sub, new Context\Simple($tmp)));
+            $flow->exec(new Context\Overlay($sub, new Context\Simple($tmp)));
             $offset++;
         }
-        if ($empty) {
+        if ($offset == 0) {
             $result = $flow->alt($context);
         }
-        return $result;
+        return $offset;
     }
 
     /**

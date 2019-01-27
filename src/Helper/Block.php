@@ -38,11 +38,6 @@ final class Block extends Standard
         if (!$name) {
             throw new Exception\RuntimeException("Block name must not be empty");
         }
-//        if (isset($params['blocks'])) {
-//            /* @var $node Inheritance\Node */
-//            $node = $params['blocks'];
-//            $node->register($name, $flow);
-//        } else
         if (isset($params['inheritance'])) {
             /* @var $chain Inheritance\Chain */
             $chain = $params['inheritance'];

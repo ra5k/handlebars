@@ -48,20 +48,10 @@ final class Vm implements Engine
      */
     public function __construct(Library $library = null, Format $escape = null, Helper\Store $helpers = null, Parser $parser = null)
     {
-        $this->library = $library ?: new Library\Dummy;
+        $this->library = $library ?? new Library\Dummy;
         $this->format = $escape ?? new Format\Html();
-        $this->parser = $parser ?: new Parser\Once(new Parser\Csr);
-        $this->helpers = $helpers ?: new Helper\Store\Arr([
-            'if' => new Helper\When,
-            'each' => new Helper\Each,
-            'with' => new Helper\With,
-            'unless' => new Helper\Unless,
-            'include' => new Helper\Partial,
-            'extends' => new Helper\Derived,
-            'block' => new Helper\Block,
-            'parent' => new Helper\Super,
-            'section' => new Helper\Section,
-        ]);
+        $this->parser = $parser ?? new Parser\Once(new Parser\Csr);
+        $this->helpers = $helpers ?? new Helper\Store\Std();
     }
 
     /**

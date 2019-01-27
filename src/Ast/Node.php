@@ -47,5 +47,5 @@ interface Node
      * @return array
      */
     public function export(): array;
-
+    
 }

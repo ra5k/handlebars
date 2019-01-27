@@ -21,6 +21,8 @@ interface Helper
      * @param Arguments $args
      * @param Context $context
      * @param Flow $flow
+     * 
+     * @return mixed
      */
     public function exec(Arguments $args, Context $context, Flow $flow);
 

@@ -30,12 +30,13 @@ final class Unless extends Standard
      */
     public function exec(Arguments $args, Context $context, Flow $flow)
     {
-        if (!$args->at(1)) {
-            $result = $flow->exec($context);
+        $satisfied = !$args->at(1);
+        if ($satisfied) {
+            $flow->exec($context);
         } else {
-            $result = $flow->alt($context);
+            $flow->alt($context);
         }
-        return $result;
+        return $satisfied;
     }
 
 }
